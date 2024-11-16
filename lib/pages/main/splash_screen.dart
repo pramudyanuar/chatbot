@@ -1,14 +1,15 @@
-import 'package:chatbot/pages/main/controller/splash_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:chatbot/core/global_components/base_widget_container.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:chatbot/pages/main/controller/splash_controller.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Initialize the SplashController to check the login status
     Get.put(SplashController());
 
     return BaseWidgetContainer(

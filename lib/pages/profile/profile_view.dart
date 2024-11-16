@@ -1,9 +1,24 @@
 import 'package:chatbot/core/global_components/base_widget_container.dart';
+import 'package:chatbot/core/utils/routes_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
 
 class ProfileView extends StatelessWidget {
   ProfileView({super.key});
+
+  // Function to logout and clear login status
+  Future<void> _logout() async {
+    // Get the SharedPreferences instance
+    final prefs = await SharedPreferences.getInstance();
+
+    // Set isLoggedIn to false
+    await prefs.setBool('isLoggedIn', false);
+
+    // Navigate to login screen after logout
+    Get.offAllNamed(NavigationRoute.login);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +88,7 @@ class ProfileView extends StatelessWidget {
               SizedBox(
                 width: double.infinity, // Full width
                 child: ElevatedButton(
-                  onPressed: () {
-                    // Handle logout action
-                  },
+                  onPressed: _logout, // Logout action
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
                     shape: RoundedRectangleBorder(

@@ -1,25 +1,24 @@
-import 'package:chatbot/core/utils/routes_screen.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:chatbot/core/utils/routes_screen.dart';
 
 class SplashController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _decideNextScreen();
+    _checkLoginStatus();  // Check login status when the SplashScreen is initialized
   }
 
-  Future<void> _decideNextScreen() async {
-    // Delay before deciding the next screen
-    await Future.delayed(const Duration(seconds: 2));
+  Future<void> _checkLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    print(isLoggedIn);
 
-    Get.offNamed(NavigationRoute.onboarding);
-
-    // Check if user is logged in and navigate accordingly
-    //bool isTokenAvailable = await SharedPreferencesUtils().isLogin();
-    // if (isTokenAvailable) {
-    //   Get.offNamed(NavigationRoute.mainMenu);
-    // } else {
-    //   Get.offNamed(NavigationRoute.login);
-    // }
+    // Navigate to the main screen if logged in, otherwise to the login screen
+    if (isLoggedIn) {
+      Get.offAllNamed(NavigationRoute.main);  // User is logged in
+    } else {
+      Get.offAllNamed(NavigationRoute.onboarding);  // User is not logged in
+    }
   }
 }
